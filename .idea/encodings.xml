@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/admin-member/member-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/admin-member/member-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/admin-member/menber-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/admin-member/menber-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/admin-member/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/admin-member/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-admin/admin-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-admin/admin-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-admin/admin-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-admin/admin-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-admin/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-admin/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-chan/chan-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-chan/chan-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-chan/chan-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-chan/chan-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-chan/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-chan/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-finance/finance-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-finance/finance-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-finance/finance-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-finance/finance-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-finance/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-finance/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-iaas/authorization-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-iaas/authorization-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-iaas/gateway-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-iaas/gateway-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-iaas/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-iaas/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-statistics/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-statistics/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-statistics/statistics-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-statistics/statistics-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-statistics/statistics-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-statistics/statistics-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-task/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/base-task/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/exchange-engine/exchange-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/exchange-engine/exchange-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/exchange-engine/exchange-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/exchange-engine/exchange-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/exchange-engine/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/exchange-engine/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/match-engine/match-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/match-engine/match-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/match-engine/match-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/match-engine/match-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/match-engine/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/match-engine/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+  </component>
+</project>
