@@ -1,0 +1,15 @@
+server:
+  port: 9999
+  address: 0.0.0.0
+logging:
+  level:
+    org.springframework.security: DEBUG
+spring:
+  application:
+    name: authorization-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 123.57.243.203:8848
+        username: nacos
+        password: nacos

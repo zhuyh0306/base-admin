@@ -148,6 +148,11 @@
                 <artifactId>aliyun-java-sdk-dm</artifactId>
                 <version>${aliyun-java-sdk-dm.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-oauth2-authorization-server</artifactId>
+                <version>1.0.2</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <modules>
@@ -187,8 +192,8 @@
     </dependency>
 </dependencies>
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-cloud.version>2022.0.0</spring-cloud.version>
         <com.alibaba-cloud.version>2022.0.0.0</com.alibaba-cloud.version>
