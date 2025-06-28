@@ -18,6 +18,9 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2Token;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
+import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import java.security.Principal;
 import java.time.Instant;
 import java.time.Duration;
@@ -30,14 +33,16 @@ public class PasswordAuthenticationProvider implements AuthenticationProvider {
     private final AuthenticationManager authenticationManager;
     private final RegisteredClientRepository registeredClientRepository;
     private final OAuth2AuthorizationService authorizationService;
+    private final JwtEncoder jwtEncoder;
 
     public PasswordAuthenticationProvider(AuthenticationManager authenticationManager,
                                           RegisteredClientRepository registeredClientRepository,
                                           OAuth2AuthorizationService authorizationService,
-                                          Object ignored) {
+                                          JwtEncoder jwtEncoder) {
         this.authenticationManager = authenticationManager;
         this.registeredClientRepository = registeredClientRepository;
         this.authorizationService = authorizationService;
+        this.jwtEncoder = jwtEncoder;
     }
 
     @Override
@@ -59,13 +64,26 @@ public class PasswordAuthenticationProvider implements AuthenticationProvider {
             throw new RuntimeException("客户端不存在");
         }
 
-        // 手动生成 AccessToken
+        // 生成 JWT 作为 AccessToken
         Instant issuedAt = Instant.now();
         Instant expiresAt = issuedAt.plus(Duration.ofHours(48));
         Set<String> scopes = Collections.singleton("all");
+        
+        JwtClaimsSet claims = JwtClaimsSet.builder()
+                .issuer("http://localhost:9999")
+                .subject(userAuth.getName())
+                .audience(Collections.singletonList(clientId))
+                .issuedAt(issuedAt)
+                .expiresAt(expiresAt)
+                .claim("scope", String.join(" ", scopes))
+                .claim("client_id", clientId)
+                .build();
+        
+        String jwtToken = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+        
         OAuth2AccessToken accessToken = new OAuth2AccessToken(
                 OAuth2AccessToken.TokenType.BEARER,
-                UUID.randomUUID().toString(),
+                jwtToken,
                 issuedAt,
                 expiresAt,
                 scopes

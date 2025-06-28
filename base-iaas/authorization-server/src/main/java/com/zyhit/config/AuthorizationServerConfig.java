@@ -21,6 +21,21 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 
+// JWT 相关导入
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.proc.SecurityContext;
+
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.interfaces.RSAPublicKey;
+import java.security.interfaces.RSAPrivateKey;
+
 // 只保留你自定义的 Converter/Provider
 import com.zyhit.config.PasswordAuthenticationConverter;
 import com.zyhit.config.PasswordAuthenticationProvider;
@@ -54,6 +69,34 @@ public class AuthorizationServerConfig {
         return AuthorizationServerSettings.builder().build();
     }
 
+    // JWT 相关 Bean 配置
+    @Bean
+    public KeyPair keyPair() throws Exception {
+        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+        keyPairGenerator.initialize(2048);
+        return keyPairGenerator.generateKeyPair();
+    }
+
+    @Bean
+    public JWKSource<SecurityContext> jwkSource(KeyPair keyPair) {
+        RSAKey rsaKey = new RSAKey.Builder((RSAPublicKey) keyPair.getPublic())
+                .privateKey((RSAPrivateKey) keyPair.getPrivate())
+                .keyID(UUID.randomUUID().toString())
+                .build();
+        JWKSet jwkSet = new JWKSet(rsaKey);
+        return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
+    }
+
+    @Bean
+    public JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
+        return new NimbusJwtEncoder(jwkSource);
+    }
+
+    @Bean
+    public JwtDecoder jwtDecoder(KeyPair keyPair) {
+        return NimbusJwtDecoder.withPublicKey((RSAPublicKey) keyPair.getPublic()).build();
+    }
+
     // RedisTemplate 配置
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
@@ -76,7 +119,8 @@ public class AuthorizationServerConfig {
             AuthenticationManager authenticationManager,
             AuthorizationServerSettings authorizationServerSettings,
             RegisteredClientRepository registeredClientRepository,
-            org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService authorizationService
+            org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService authorizationService,
+            JwtEncoder jwtEncoder
     ) throws Exception {
         OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer();
         http.apply(authorizationServerConfigurer);
@@ -88,7 +132,7 @@ public class AuthorizationServerConfig {
                                 authenticationManager,
                                 registeredClientRepository,
                                 authorizationService,
-                                null
+                                jwtEncoder
                         ))
                 );
         http.csrf(csrf -> csrf.disable());
