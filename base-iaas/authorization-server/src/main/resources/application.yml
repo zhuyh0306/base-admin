@@ -1,10 +1,17 @@
 server:
   port: 9999
   address: 0.0.0.0
+
 logging:
   level:
     org.springframework.security: DEBUG
+
 spring:
+  data:
+    redis:
+      host: 123.57.243.203
+      port: 6379
+      password: Asdf1234.
   application:
     name: authorization-server
   cloud:

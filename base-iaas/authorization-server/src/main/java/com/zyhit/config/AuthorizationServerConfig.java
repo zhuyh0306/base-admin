@@ -16,12 +16,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
-import org.springframework.security.oauth2.server.authorization.InMemoryOAuth2AuthorizationService;
-import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
-import org.springframework.security.oauth2.server.authorization.token.DelegatingOAuth2TokenGenerator;
-import org.springframework.security.oauth2.server.authorization.token.OAuth2AccessTokenGenerator;
-import org.springframework.security.oauth2.server.authorization.token.OAuth2RefreshTokenGenerator;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 
 // 只保留你自定义的 Converter/Provider
 import com.zyhit.config.PasswordAuthenticationConverter;
@@ -56,17 +54,20 @@ public class AuthorizationServerConfig {
         return AuthorizationServerSettings.builder().build();
     }
 
+    // RedisTemplate 配置
     @Bean
-    public OAuth2AuthorizationService authorizationService(RegisteredClientRepository registeredClientRepository) {
-        return new InMemoryOAuth2AuthorizationService();
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        template.setConnectionFactory(redisConnectionFactory);
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setValueSerializer(new JdkSerializationRedisSerializer());
+        return template;
     }
 
+    // Redis 版 OAuth2AuthorizationService
     @Bean
-    public OAuth2TokenGenerator<?> tokenGenerator() {
-        return new DelegatingOAuth2TokenGenerator(
-                new OAuth2AccessTokenGenerator(),
-                new OAuth2RefreshTokenGenerator()
-        );
+    public org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService authorizationService(RedisTemplate<String, Object> redisTemplate) {
+        return new RedisOAuth2AuthorizationService(redisTemplate);
     }
 
     @Bean
@@ -75,8 +76,7 @@ public class AuthorizationServerConfig {
             AuthenticationManager authenticationManager,
             AuthorizationServerSettings authorizationServerSettings,
             RegisteredClientRepository registeredClientRepository,
-            OAuth2AuthorizationService authorizationService,
-            OAuth2TokenGenerator<?> tokenGenerator
+            org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService authorizationService
     ) throws Exception {
         OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer();
         http.apply(authorizationServerConfigurer);
@@ -88,7 +88,7 @@ public class AuthorizationServerConfig {
                                 authenticationManager,
                                 registeredClientRepository,
                                 authorizationService,
-                                (OAuth2TokenGenerator) tokenGenerator
+                                null
                         ))
                 );
         http.csrf(csrf -> csrf.disable());
