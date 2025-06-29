@@ -3,6 +3,12 @@ server:
 spring:
   application:
     name: gateway-server
+  # Redis 配置
+  data:
+    redis:
+      host: 123.57.243.203
+      port: 6379
+      password: Asdf1234.
   cloud:
     sentinel:
       filter:
@@ -60,6 +66,16 @@ spring:
           uri: https://aliyun.com
           predicates:
             - Path=/product
+        - id: test-filter-router
+          uri: https://httpbin.org/anything
+          predicates:
+            - Path=/test/**
             #网关完成两种维度的限流
             #网关维度+Api分组
+
+# 不需要 token 访问的 URL 配置
+no:
+  token:
+    access:
+      urls: /admin/login,/admin/validate/code,/oauth2/token,/product,/test/public
 
